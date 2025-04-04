@@ -25,6 +25,8 @@ pip install pyncm
 ```
 3. 确保`libncmdump.dll`在程序目录下（用于NCM文件解密）
 
+注意：由于GitHub限制，仓库中不包含`libncmdump.dll`文件，需要自行准备并放置在程序目录下。
+
 ## 使用方法
 
 ### 基本使用
