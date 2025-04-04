@@ -1,0 +1,6 @@
+{
+    "default_music_dir": "F:\\CloudMusic",
+    "jsonlist_dir": "jsonlist",
+    "playlist_dir": "Myplaylist",
+    "dll_path": "./libncmdump.dll"
+}
