@@ -1,0 +1,22 @@
+# Python字节码文件
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 日志文件
+*.log
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 虚拟环境
+venv/
+env/
+ENV/
+
+# JSON歌单数据
+jsonlist/*.json
+
+# 备份文件
+*.bak
