@@ -1,11 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from pyncm import apis
-import json
-import sys
-import argparse
 import os
-import re
 from globle_func import sanitize_filename,save_json,normalize_playlist
 
 def get_playlist_info(playlist_id):

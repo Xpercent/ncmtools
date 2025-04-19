@@ -1,4 +1,4 @@
-import json,os
+import json
 def sanitize_filename(filename):
     """
     清理文件名，替换Windows系统不允许的字符

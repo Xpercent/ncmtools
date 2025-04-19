@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 from search_playlist import main as search_main
 from sort_playlist import main as sort_main
-from pyncm_cli import __main__ as pyncm_main
 from globle_func import sanitize_filename,load_json,save_json,normalize_playlist
-import os,sys,shlex,subprocess
-from pyncm.apis import playlist,login
+import os,sys,shlex
+from subprocess import run
+from pyncm.apis import playlist
 default_config = {
     "pyncm_command": '--quality exhigh --lyric-no "tlyric romalrc yrc" --no-overwrite',
     "playlist_dir": "Myplaylist",
@@ -47,6 +47,17 @@ def wait_for_user():
     """等待用户按键继续"""
     input("\n按回车键返回主菜单...")  
 
+def get_resource_path(relative_path):
+    """ 获取打包后的资源路径 """
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath("."), relative_path)
+
+def get_resource_path(relative_path):
+    """ 获取打包后的资源路径 """
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath("."), relative_path)
 
 def pyncm_cli_ui():
     while True:
@@ -65,12 +76,25 @@ def pyncm_cli_ui():
                 input2 = f'{CONFIG["pyncm_command"]} --output "{safe_name}"'
             break
     command_string = f'{playlisturl} {input2}'
-    cmd = [sys.executable,"-m", "pyncm_cli"]
+    # original_argv = sys.argv.copy()
+    # try:
+    #     # 将命令字符串分割为参数列表
+    #     args = shlex.split(command_string)
+    #     # 设置新的参数列表 (保留脚本名称)
+    #     sys.argv = [original_argv[0]] + args
+    #     # 调用cli模块的main函数
+    #     pyncmcli_main()
+    # finally:
+    #     # 恢复原始参数
+    #     sys.argv = original_argv
+    exe_path = get_resource_path("pyncm.exe")
+
+    cmd = [exe_path]#sys.executable,
     cmd.extend(shlex.split(command_string))
     if CONFIG["cookie"]:
         cmd.extend(["--cookie", CONFIG["cookie"]])
     try:
-        subprocess.run(cmd, check=True)
+        run(cmd, check=True)
     finally:
         search_main(playlistid, CONFIG['playlist_dir'])
         wait_for_user()
@@ -91,7 +115,6 @@ def sort_playlist_ui():
     
 def default_set_ui():
     """默认参数设置界面"""
-    print(default_config)
     while True:
         print("\n当前默认参数设置:")
         print(f"  1. pyncm下载参数: {CONFIG['pyncm_command']}")
